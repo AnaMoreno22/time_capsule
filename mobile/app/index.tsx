@@ -31,27 +31,23 @@ export default function App() {
 
   async function handleGithubOAuthCode(code: string) {
     try {
-      //   console.log("token");
-      // console.log(api);
       const response = await api.post("/register", {
         code,
       });
-      console.log(response);
-      console.log("aham");
+
       const { token } = response.data;
-      console.log(token);
+
       await SecureStore.setItemAsync("token", token);
 
       router.push("/memories");
     } catch (error) {
-      console.log("aa");
+      console.log(error);
     }
   }
   useEffect(() => {
     // console.log(makeRedirectUri({ scheme: "nlwspacetime" }));
     if (response?.type === "success") {
       const { code } = response.params;
-      console.log(code);
       handleGithubOAuthCode(code);
     }
   }, [response]);
